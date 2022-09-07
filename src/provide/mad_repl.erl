@@ -67,8 +67,8 @@ merge_config(App, AppConfigs, []) -> {App, AppConfigs};
 merge_config(App, AppConfigs, [{Key, _} = Tuple | Rest]) ->
     merge_config(App, lists:keystore(Key, 1, AppConfigs, Tuple), Rest).
 
-acc_start(A,Acc) ->
-    application:ensure_all_started(A), Acc.
+acc_start({_, A, _}, Acc) -> application:ensure_all_started(A), Acc;
+acc_start(A, Acc) -> application:ensure_all_started(A), Acc.
 
 % for system application we just start, forgot about env merging
 
